@@ -1,6 +1,7 @@
 <script lang="ts">
 
   import { navAudioService } from "$lib/ui/components/audio.svelte";
+  import { m } from "$lib/paraglide/messages.js";
 
   interface Props {
     routes: { href: string; label: string }[];
@@ -42,7 +43,7 @@
       transition:flipDown
       onintrostart={() => navAudioService.play()}
       class="absolute top-9 inset-x-0 z-50 bg-background border-b-2 border-outline-variant origin-top will-change-transform pointer-events-auto"
-      aria-label="Main navigation"
+      aria-label={m.main_navigation()}
     >
       <div class="p-3.5">
         <div class="h-16">
@@ -94,7 +95,7 @@
         <div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-3">
           <button
             class="border border-outline-variant hover:bg-primary/30 px-2 py-1 text-xs font-mono tracking-widest flex items-center justify-center gap-1.5 w-fit cursor-pointer"
-            aria-label="Switch language"
+            aria-label={m.switch_language()}
             onclick={onToggleLocale}
           >
             <span class={currentLocale === "en" ? "text-primary-fixed-dim" : "opacity-40"}>EN</span>

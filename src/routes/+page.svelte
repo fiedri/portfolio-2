@@ -77,7 +77,7 @@
 
 <div class="flex flex-col h-full">
   <div class="px-5 relative py-1">
-    <span class="absolute right-0 text-[8px] text-outline-variant mt-1.5 mr-1.5"
+    <span class="sm:absolute right-0 text-[8px] text-outline-variant mt-1.5 mr-1.5"
       >SEC_LEVEL_01</span
     >
     <div class="w-full md:w-3/4">
@@ -116,7 +116,7 @@
         <a
           href="/Friedrich_Ruiz-Curriculum.pdf"
           download
-          aria-label="Download CV"
+          aria-label={m.download_cv()}
           class="inline-flex items-center gap-1.5 self-start mt-1.5 px-2.5 py-1.5 border border-primary-fixed-dim bg-primary text-background hover:bg-primary-fixed-dim hover:text-on-primary transition-colors rounded-none outline-none focus:outline-none text-[10px] font-bold tracking-widest uppercase"
         >
           <DownloadIcon class="h-3.5 w-3.5" />

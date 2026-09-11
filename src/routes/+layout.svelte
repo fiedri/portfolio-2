@@ -65,8 +65,8 @@ animate-pulse da un efecto de breathing
     </div>
       <button
       class="ml-auto border border-outline-variant hover:bg-primary/30 px-2 text-xs font-mono tracking-widest flex items-center gap-1.5 cursor-pointer"
-      aria-label={muted ? "Activar sonido" : "Silenciar sonido"}
-      title={muted ? "Activar sonido" : "Silenciar sonido"}
+      aria-label={muted ? m.audio_unmute() : m.audio_mute()}
+      title={muted ? m.audio_unmute() : m.audio_mute()}
       onclick={onToggleMute}
     >
       {#if muted}
@@ -78,27 +78,27 @@ animate-pulse da un efecto de breathing
     <div class="flex flex-row gap-3.5 px-2 hidden sm:flex">
       <button
         class="border border-outline-variant hover:bg-primary/30 px-2 text-xs font-mono tracking-widest flex items-center gap-1.5 cursor-pointer"
-        aria-label="Switch language"
+        aria-label={m.switch_language()}
         onclick={toggleLocale}
       >
         <span class={currentLocale === "en" ? "text-primary-fixed-dim" : "opacity-40"}>EN</span>
         <span class="opacity-30">|</span>
         <span class={currentLocale === "es" ? "text-primary-fixed-dim" : "opacity-40"}>ES</span>
       </button>
-      <button class="hover:bg-primary/30 p-1.5" aria-label="Processor status" onclick={() => {}}>
+      <span class="hover:bg-primary/30 p-1.5" aria-label={m.processor_status()}>
         <CpuIcon />
-      </button>
-      <button class="hover:bg-primary/30 p-1.5" aria-label="Radio status" onclick={() => {}}>
+      </span>
+      <span class="hover:bg-primary/30 p-1.5" aria-label={m.radio_status()}>
         <RadioIcon />
-      </button>
-      <button class="hover:bg-primary/30 p-1.5" aria-label="Clock" onclick={() => {}}>
+      </span>
+      <span class="hover:bg-primary/30 p-1.5" aria-label={m.clock()}>
         <Clock4Icon />
-      </button>
+      </span>
     </div>
   
     <button
       class="md:hidden hover:bg-primary/30 p-1.5"
-      aria-label="Toggle navigation menu"
+      aria-label={m.toggle_navigation()}
       aria-expanded={mobileNavOpen}
       onclick={() => (mobileNavOpen = !mobileNavOpen)}
     >

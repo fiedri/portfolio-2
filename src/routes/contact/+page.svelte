@@ -204,12 +204,12 @@
 
 <div class="flex flex-col min-h-full p-5 gap-5">
   <div class="bg-surface-container relative">
-    <div class="absolute right-0 flex flex-col text-[8px] text-right mt-1 mr-1">
+    <div class="sm:absolute right-0 flex flex-col text-[8px] text-right mt-1 mr-1">
       <span class="font-bold">STATUS: ONLINE</span>
       <span>NODE_ID: 192.168.1.104</span>
     </div>
-    <div class="pl-5 py-2">
-      <h2 class="uppercase text-base">{m.contact_title()}</h2>
+    <div class="pl-5 py-1 sm:py-2">
+      <h2 class="uppercase text-xl font-bold">{m.contact_title()}</h2>
       <p class="text-sm">
         {m.contact_intro()}
         <span

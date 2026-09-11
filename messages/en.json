@@ -62,5 +62,14 @@
 	"contact_form_compression_active": "compression_active: true",
 	"contact_form_packet_priority": "packet_priority: normal",
 	"seo_title": "Friedrich Ruiz — Web Developer",
-	"seo_description": "Portfolio of Friedrich Ruiz, full-stack developer specializing in SvelteKit, TypeScript and clean architecture. Projects, certifications and contact channels."
+	"seo_description": "Portfolio of Friedrich Ruiz, full-stack developer specializing in SvelteKit, TypeScript and clean architecture. Projects, certifications and contact channels.",
+	"audio_unmute": "Unmute sound",
+	"audio_mute": "Mute sound",
+	"switch_language": "Switch language",
+	"download_cv": "Download CV",
+	"main_navigation": "Main navigation",
+	"toggle_navigation": "Toggle navigation menu",
+	"processor_status": "Processor status",
+	"radio_status": "Radio status",
+	"clock": "Clock"
 }

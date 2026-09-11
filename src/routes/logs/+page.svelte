@@ -36,7 +36,7 @@
 
 <div class="flex flex-col min-h-full p-5 gap-5">
   <div class="bg-surface-container relative">
-    <div class="absolute right-0 flex flex-col text-[8px] text-right mt-1 mr-1">
+    <div class="sm:absolute right-0 flex flex-col text-[8px] text-right mt-1 mr-1">
       <span>REF: CRT-901</span>
     </div>
     <div class="pl-5 py-2 flex flex-col gap-2">
