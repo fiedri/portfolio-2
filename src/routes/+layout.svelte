@@ -1,7 +1,6 @@
 <script lang="ts">
   import "./layout.css";
   import TvGlitchOverlay from "$lib/ui/components/TvGlitchOverlay.svelte";
-  import favicon from "$lib/assets/favicon.svg";
   import { navigating, page } from "$app/stores";
   import { CpuIcon, RadioIcon, Clock4Icon, MenuIcon, XIcon } from "@lucide/svelte";
   import MobileNav from "$lib/ui/components/MobileNav.svelte";
@@ -25,7 +24,7 @@
 
 <svelte:head>
   <link rel="icon" type="image/webp" href="/foto.webp" />
-  <link rel="icon" href={favicon} />
+  <link rel="icon" href="/foto.webp" />
   <title>{m.seo_title()}</title>
   <meta name="description" content={m.seo_description()} />
   <meta name="theme-color" content="#0c160a" />
