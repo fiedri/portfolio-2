@@ -4,6 +4,8 @@
 </svelte:head>
 
 <script lang="ts">
+  import { m } from "$lib/paraglide/messages.js";
+
   interface SkillItem {
     icon: string;
     name: string;
@@ -16,17 +18,19 @@
 
   const skills: SkillGroup[] = [
     {
-      skillsTitle: "Frontend",
+      skillsTitle: m.skills_group_frontend(),
       skillsList: [
         { icon: "devicon-html5-plain", name: "HTML5" },
         { icon: "devicon-css3-plain", name: "CSS3" },
         { icon: "devicon-javascript-plain", name: "JavaScript" },
+        { icon: "devicon-typescript-plain", name: "TypeScript" },
         { icon: "devicon-svelte-plain", name: "Svelte / SvelteKit" },
+        { icon: "devicon-react-original", name: "React" },
         { icon: "devicon-tailwindcss-plain", name: "Tailwind CSS" },
       ],
     },
     {
-      skillsTitle: "Backend",
+      skillsTitle: m.skills_group_backend(),
       skillsList: [
         { icon: "devicon-nodejs-plain", name: "Node.js" },
         { icon: "devicon-express-original", name: "Express.js" },
@@ -36,7 +40,7 @@
       ],
     },
     {
-      skillsTitle: "Otras",
+      skillsTitle: m.skills_group_other(),
       skillsList: [{ icon: "devicon-git-plain", name: "Git" }],
     },
   ];
@@ -48,9 +52,9 @@
       <span>REF: SKL-333</span>
     </div>
     <div class="pl-5 py-2 flex flex-col gap-2">
-      <h2 class="uppercase text-xl font-bold">Skills_matrix.exe</h2>
+      <h2 class="uppercase text-xl font-bold">{m.skills_title()}</h2>
       <p class="text-xs">
-        Indexing operator skill matrix across frontend, backend and auxiliary subsystems. Mapping proficiency nodes to active toolchains.
+        {m.skills_intro()}
         <span class="w-2 h-4 bg-primary-fixed-dim animate-blink flex-shrink-0 inline-block"></span>
       </p>
     </div>

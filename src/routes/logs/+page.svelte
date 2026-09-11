@@ -1,5 +1,6 @@
 <script lang="ts">
   import { SquareArrowOutUpRight } from "@lucide/svelte";
+  import { m } from "$lib/paraglide/messages.js";
 
   const certificates = [
     {
@@ -39,9 +40,9 @@
       <span>REF: CRT-901</span>
     </div>
     <div class="pl-5 py-2 flex flex-col gap-2">
-      <h2 class="uppercase text-xl font-bold">Certificates_registry.exe</h2>
+      <h2 class="uppercase text-xl font-bold">{m.logs_title()}</h2>
       <p class="text-xs">
-        Querying credential verification nodes across distributed training networks. Cross-referencing issued certificates with authority signatures.
+        {m.logs_intro()}
         <span class="w-2 h-4 bg-primary-fixed-dim animate-blink flex-shrink-0 inline-block"></span>
       </p>
     </div>
@@ -72,12 +73,28 @@
             href={cert.verifyLink}
             target="_blank"
             class="inline-flex items-center gap-1.5 px-3 py-2 border border-outline-variant hover:bg-white/10 text-primary-fixed-dim hover:text-primary transition-colors rounded-none outline-none focus:outline-none text-[9px] font-bold tracking-widest"
-            title="Verify certificate"
+            title={m.logs_tooltip_verify()}
           >
             [VERIFY]<SquareArrowOutUpRight class="h-4 w-4" />
           </a>
         </div>
       </div>
     {/each}
+  </div>
+  <div class="flex flex-col gap-5">
+    <span class="bg-outline-variant text-background px-2 text-[10px] font-bold inline-block self-start">// CORE_BENEFITS</span>
+    <div class="flex flex-col gap-3">
+      {#each [1, 2, 3] as n}
+        <div class="border border-outline-variant bg-surface-container-low p-4 flex flex-col gap-1.5">
+          <span class="text-[9px] font-mono opacity-60">0x0{n}</span>
+          <span class="text-sm font-semibold text-primary-fixed-dim">
+            {#if n === 1}{m.logs_benefit_1_name()}{:else if n === 2}{m.logs_benefit_2_name()}{:else}{m.logs_benefit_3_name()}{/if}
+          </span>
+          <p class="text-xs text-on-surface-variant">
+            {#if n === 1}{m.logs_benefit_1_desc()}{:else if n === 2}{m.logs_benefit_2_desc()}{:else}{m.logs_benefit_3_desc()}{/if}
+          </p>
+        </div>
+      {/each}
+    </div>
   </div>
 </div>

@@ -1,12 +1,13 @@
 <script lang="ts">
   import type { Project } from "$lib/interfaces/projects";
   import { SquareArrowOutUpRight, HistoryIcon } from "@lucide/svelte";
-  
+  import { m } from "$lib/paraglide/messages.js";
+
   let projects: Project[] = [
     {
       id: "VIB-007",
       title: "VIBE",
-      description: "Reproductor de música local, offline y sin anuncios",
+      description: m.projects_vibe_description(),
       stack: ["Svelte", "Capacitor", "Android"],
       status: "SUCCESS",
       github_link: "https://github.com/fiedri/vibe-player",
@@ -15,7 +16,7 @@
     {
       id: "ANM-001",
       title: "ANIME_BEATS",
-      description: "Streaming de música de anime",
+      description: m.projects_anime_beats_description(),
       stack: ["SvelteKit", "MongoDB"],
       status: "SUCCESS",
       github_link: "https://github.com/fiedri/AnimeBeats",
@@ -24,7 +25,7 @@
     {
       id: "BBH-002",
       title: "BARBER_HERO",
-      description: "Landing page para barberías",
+      description: m.projects_barber_hero_description(),
       stack: ["JavaScript", "Svelte", "CSS"],
       status: "SUCCESS",
       github_link: "https://github.com/fiedri/barberHero.git",
@@ -33,7 +34,7 @@
     {
       id: "SPT-003",
       title: "SPOTIFY_CLONE",
-      description: "Clon de Spotify con reproducción de música",
+      description: m.projects_spotify_clone_description(),
       stack: ["SvelteKit", "TypeScript", "Tailwind"],
       status: "SUCCESS",
       github_link: "https://github.com/fiedri/spotify_clone",
@@ -42,7 +43,7 @@
     {
       id: "PKD-004",
       title: "POKEDEX",
-      description: "Buscador de Pokémon con PokeAPI",
+      description: m.projects_pokedex_description(),
       stack: ["JavaScript", "HTML", "CSS"],
       status: "SUCCESS",
       github_link: "https://github.com/fiedri/pokedex.git",
@@ -51,7 +52,7 @@
     {
       id: "RTB-005",
       title: "ROOT_BLOCKER",
-      description: "Bloqueador de sitios y palabras",
+      description: m.projects_root_blocker_description(),
       stack: ["JavaScript", "extension"],
       status: "NO_DEPLOY",
       github_link: "https://github.com/fiedri/root-blocker.git",
@@ -60,7 +61,7 @@
     {
       id: "SNK-006",
       title: "SNAKE_GAME",
-      description: "Clásico Snake en JavaScript",
+      description: m.projects_snake_game_description(),
       stack: ["JavaScript", "game"],
       status: "SUCCESS",
       github_link: "https://github.com/fiedri/Juego-snake.git",
@@ -75,11 +76,9 @@
       <span>REF: PX-990</span>
     </div>
     <div class="pl-5 py-2 flex flex-col gap-2">
-      <h2 class="uppercase text-xl font-bold">Projects_matrix.exe</h2>
+      <h2 class="uppercase text-xl font-bold">{m.projects_title()}</h2>
       <p class="text-xs">
-        Active repository indexing for autonomous development clusters. Querying
-        current deployment statuses and architectural stacks across the
-        distributed network.
+        {m.projects_intro()}
         <span
           class="w-2 h-4 bg-primary-fixed-dim animate-blink flex-shrink-0 inline-block"
         ></span>
@@ -106,9 +105,9 @@
             {/each}
           </div>
           <div class="flex justify-end gap-2 border-t border-outline-variant pt-3">
-            <a href={project.github_link} target="_blank" class="inline-flex items-center justify-center px-3 py-2 border border-outline-variant hover:bg-white/10 text-primary-fixed-dim hover:text-primary transition-colors rounded-none outline-none focus:outline-none text-[9px] font-bold tracking-widest" title="Repository Source">[SRC]</a>
+            <a href={project.github_link} target="_blank" class="inline-flex items-center justify-center px-3 py-2 border border-outline-variant hover:bg-white/10 text-primary-fixed-dim hover:text-primary transition-colors rounded-none outline-none focus:outline-none text-[9px] font-bold tracking-widest" title={m.projects_tooltip_src()}>[SRC]</a>
             {#if project.view_link}
-              <a href={project.view_link} target="_blank" class="inline-flex items-center justify-center p-2 border border-outline-variant hover:bg-white/10 text-white transition-colors rounded-none outline-none focus:outline-none" title="View Live">
+              <a href={project.view_link} target="_blank" class="inline-flex items-center justify-center p-2 border border-outline-variant hover:bg-white/10 text-white transition-colors rounded-none outline-none focus:outline-none" title={m.projects_tooltip_live()}>
                 {#if project.status === 'SUCCESS'}<SquareArrowOutUpRight class="h-4 w-4" />{:else}<HistoryIcon class="h-4 w-4" />{/if}
               </a>
             {:else}
@@ -127,10 +126,10 @@
           text-left bg-primary/10
           "
         >
-          <th class="font-extrabold pl-3.5">Project_Identifier</th>
-          <th class="font-extrabold py-1">Stack_Configuration</th>
-          <th class="font-extrabold py-1">Deployment_Status</th>
-          <th class="font-extrabold py-1 text-right pr-3.5">Action</th>
+          <th class="font-extrabold pl-3.5">{m.projects_table_id()}</th>
+          <th class="font-extrabold py-1">{m.projects_table_stack()}</th>
+          <th class="font-extrabold py-1">{m.projects_table_status()}</th>
+          <th class="font-extrabold py-1 text-right pr-3.5">{m.projects_table_action()}</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-outline-variant">
@@ -172,7 +171,7 @@
                 href={project.github_link} 
                 target="_blank" 
                 class="inline-flex items-center justify-center px-2 py-1.5 border border-outline-variant hover:bg-white/10 text-primary-fixed-dim hover:text-primary transition-colors rounded-none outline-none focus:outline-none text-[9px] font-bold tracking-widest"
-                title="Repository Source"
+                title={m.projects_tooltip_src()}
               >
                 [SRC]
               </a>
@@ -182,7 +181,7 @@
                   href={project.view_link} 
                   target="_blank" 
                   class="inline-flex items-center justify-center p-2 border border-outline-variant hover:bg-white/10 text-white transition-colors rounded-none outline-none focus:outline-none"
-                  title="View Live"
+                  title={m.projects_tooltip_live()}
                 >
                   <!-- Icono dinámico según el estado (External Link o History) -->
                   {#if project.status === 'SUCCESS'}
@@ -194,7 +193,7 @@
               {:else}
                 <span 
                   class="inline-flex items-center justify-center p-2 border border-outline-variant/30 text-white/30 cursor-not-allowed select-none"
-                  title="No active deployment"
+                  title={m.projects_tooltip_no_deploy()}
                 >
                   {#if project.status === 'SUCCESS'}
                     <SquareArrowOutUpRight class="h-4 w-4" />

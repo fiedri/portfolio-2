@@ -4,9 +4,11 @@
     activePath: string;
     open: boolean;
     onClose: () => void;
+    currentLocale: string;
+    onToggleLocale: () => void;
   }
 
-  let { routes, activePath, open, onClose }: Props = $props();
+  let { routes, activePath, open, onClose, currentLocale, onToggleLocale }: Props = $props();
 
   function flipDown(
     node: HTMLElement,
@@ -80,14 +82,25 @@
             {/each}
           </ul>
         </nav>
-        <div class="mt-auto border-t border-outline-variant pt-4">
-          <p class="text-xs text-on-surface-variant">NETWORK_LOAD</p>
+        <div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-3">
+          <button
+            class="border border-outline-variant hover:bg-primary/30 px-2 py-1 text-xs font-mono tracking-widest flex items-center justify-center gap-1.5 w-fit cursor-pointer"
+            aria-label="Switch language"
+            onclick={onToggleLocale}
+          >
+            <span class={currentLocale === "en" ? "text-primary-fixed-dim" : "opacity-40"}>EN</span>
+            <span class="opacity-30">|</span>
+            <span class={currentLocale === "es" ? "text-primary-fixed-dim" : "opacity-40"}>ES</span>
+          </button>
+          <div>
+            <p class="text-xs text-on-surface-variant">NETWORK_LOAD</p>
           <div class="flex gap-1 h-2">
             <div class="flex-1 bg-primary-container"></div>
             <div class="flex-1 bg-primary-container"></div>
             <div class="flex-1 bg-primary-container"></div>
             <div class="flex-1 bg-surface-variant"></div>
             <div class="flex-1 bg-surface-variant"></div>
+          </div>
           </div>
         </div>
       </div>

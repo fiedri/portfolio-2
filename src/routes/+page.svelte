@@ -1,36 +1,39 @@
 <script lang="ts">
+  import { DownloadIcon } from "@lucide/svelte";
+  import { m } from "$lib/paraglide/messages.js";
+
   interface LogEntry {
     time: string;
     message: string;
   }
 
   let specs = [
-    { title: "Name", value: "Friedrich Ruiz", style: "font-extrabold" },
-    { title: "role", value: "junior_full_stack_dev" },
-    { title: "location", value: "coro_vz" },
-    { title: "Core_stack", value: "sveltekit // tailwind // drizzle" },
+    { title: m.dashboard_spec_name(), value: "Friedrich Ruiz", style: "font-extrabold" },
+    { title: m.dashboard_spec_role(), value: "junior_full_stack_dev" },
+    { title: m.dashboard_spec_location(), value: "coro_vz" },
+    { title: m.dashboard_spec_core_stack(), value: "sveltekit // tailwind // drizzle" },
     {
-      title: "status",
+      title: m.dashboard_spec_status(),
       value: "Active_Code_evolution",
       style: "text-primary-container",
     },
   ];
 
   const messages = [
-    "Database task maintenance complete",
-    "Buffer overflow prevention active",
-    "Thermal levels at 44C. fan speed normal",
-    "Cleaning cache partition",
-    "Neural link synchronization established",
-    "Firewall rules updated successfully",
-    "Unauthorized access attempt blocked",
-    "Memory defragmentation in progress",
-    "Api gateway latency: 12ms",
-    "Backup handshake protocol initiated",
-    "Garbage collector recycled 240MB",
-    "Cpu core 3 load spikes detected",
-    "Quantum node encryption refreshed",
-    "Kernel sub-routine execution finished",
+    m.dashboard_log_lines_0(),
+    m.dashboard_log_lines_1(),
+    m.dashboard_log_lines_2(),
+    m.dashboard_log_lines_3(),
+    m.dashboard_log_lines_4(),
+    m.dashboard_log_lines_5(),
+    m.dashboard_log_lines_6(),
+    m.dashboard_log_lines_7(),
+    m.dashboard_log_lines_8(),
+    m.dashboard_log_lines_9(),
+    m.dashboard_log_lines_10(),
+    m.dashboard_log_lines_11(),
+    m.dashboard_log_lines_12(),
+    m.dashboard_log_lines_13(),
   ];
 
   function getFormattedTime(date: Date) {
@@ -110,6 +113,15 @@
             <span class="{spec.style} text-xs font-bold">{spec.value}</span>
           </div>
         {/each}
+        <a
+          href="/Friedrich_Ruiz-Curriculum.pdf"
+          download
+          aria-label="Download CV"
+          class="inline-flex items-center gap-1.5 self-start mt-1.5 px-2.5 py-1.5 border border-primary-fixed-dim bg-primary text-background hover:bg-primary-fixed-dim hover:text-on-primary transition-colors rounded-none outline-none focus:outline-none text-[10px] font-bold tracking-widest uppercase"
+        >
+          <DownloadIcon class="h-3.5 w-3.5" />
+          CV
+        </a>
       </div>
     </section>
 

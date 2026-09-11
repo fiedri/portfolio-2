@@ -5,10 +5,13 @@
   import { navigating, page } from "$app/stores";
   import { CpuIcon, RadioIcon, Clock4Icon, MenuIcon, XIcon } from "@lucide/svelte";
   import MobileNav from "$lib/ui/components/MobileNav.svelte";
+  import { getLocale, setLocale, deLocalizeUrl } from "$lib/paraglide/runtime.js";
   let { children } = $props();
   let mobileNavOpen = $state(false);
-  let ActiveRoute = $derived($page.url.pathname);
+  let ActiveRoute = $derived(deLocalizeUrl($page.url).pathname);
   import { fade } from "svelte/transition";
+  const currentLocale = $derived(getLocale());
+  const toggleLocale = () => setLocale(currentLocale === "en" ? "es" : "en");
   const routes = [
     { href: "/projects", label: "/root/projects" },
     { href: "/skills", label: "/root/skills" },
@@ -38,15 +41,24 @@ animate-pulse da un efecto de breathing
       </div>
     </div>
     <div class="flex flex-row gap-3.5 px-2 hidden sm:flex">
-      <div class="hover:bg-primary/30 p-1.5">
+      <button
+        class="border border-outline-variant hover:bg-primary/30 px-2 text-xs font-mono tracking-widest flex items-center gap-1.5 cursor-pointer"
+        aria-label="Switch language"
+        onclick={toggleLocale}
+      >
+        <span class={currentLocale === "en" ? "text-primary-fixed-dim" : "opacity-40"}>EN</span>
+        <span class="opacity-30">|</span>
+        <span class={currentLocale === "es" ? "text-primary-fixed-dim" : "opacity-40"}>ES</span>
+      </button>
+      <button class="hover:bg-primary/30 p-1.5" aria-label="Processor status" onclick={() => {}}>
         <CpuIcon />
-      </div>
-      <div class="hover:bg-primary/30 p-1.5">
+      </button>
+      <button class="hover:bg-primary/30 p-1.5" aria-label="Radio status" onclick={() => {}}>
         <RadioIcon />
-      </div>
-      <div class="hover:bg-primary/30 p-1.5">
+      </button>
+      <button class="hover:bg-primary/30 p-1.5" aria-label="Clock" onclick={() => {}}>
         <Clock4Icon />
-      </div>
+      </button>
     </div>
     <button
       class="md:hidden hover:bg-primary/30 p-1.5"
@@ -115,7 +127,7 @@ animate-pulse da un efecto de breathing
     </main>
   </div>
 
-  <MobileNav {routes} activePath={ActiveRoute} open={mobileNavOpen} onClose={() => (mobileNavOpen = false)} />
+  <MobileNav {routes} activePath={ActiveRoute} open={mobileNavOpen} onClose={() => (mobileNavOpen = false)} currentLocale={currentLocale} onToggleLocale={toggleLocale} />
 
   <footer
     class="h-8 text-xs flex-shrink-0 border-t border-outline-variant flex flex-row justify-between items-center"

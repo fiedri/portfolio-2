@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="%lang%" dir="%dir%">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,6 +7,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+<script>
+	(function () {
+		var cookie = document.cookie.match(/PARAGLIDE_LOCALE=([^;]+)/);
+		if (cookie) return;
+		var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+		var es = /^(America\/(Argentina|Chile|Mexico_City|Bogota|Lima|Costa_Rica|El_Salvador|Guatemala|Honduras|Managua|Panama|Caracas|La_Paz|Quito|Santo_Domingo|Havana|Asuncion|Montevideo|Santiago|Puerto_Rico)|Europe\/(Madrid)|Atlantic\/Canary|Africa\/Ceuta)/.test(tz);
+		var locale = es ? "es" : "en";
+		document.cookie = "PARAGLIDE_LOCALE=" + locale + "; path=/; max-age=31536000";
+		var rest = location.pathname.replace(/^\/(?:en|es)(?=\/|$)/, "") || "/";
+		if (!location.pathname.startsWith("/" + locale)) location.replace("/" + locale + rest + location.search);
+	})();
+</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

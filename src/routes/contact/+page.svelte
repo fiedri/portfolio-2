@@ -6,6 +6,7 @@
     AtSignIcon,
     LockIcon,
   } from "@lucide/svelte";
+  import { m } from "$lib/paraglide/messages.js";
 
   interface TransmissionChannel {
     channel: string;
@@ -208,9 +209,9 @@
       <span>NODE_ID: 192.168.1.104</span>
     </div>
     <div class="pl-5 py-2">
-      <h2 class="uppercase text-base">Comunication_Uplink.exe</h2>
+      <h2 class="uppercase text-base">{m.contact_title()}</h2>
       <p class="text-sm">
-        Initializing external handshake protocols...
+        {m.contact_intro()}
         <span
           class="w-2 h-4 bg-primary-fixed-dim animate-blink flex-shrink-0 inline-block"
         ></span>
@@ -223,7 +224,7 @@
         <div
           class="flex flex-row items-center justify-between px-4 py-2 border-b border-outline-variant"
         >
-          <h3 class="uppercase font-light">//Transmission_channels</h3>
+          <h3 class="uppercase font-light">{m.contact_channels_title()}</h3>
           <RadioIcon class="h-4 w-4" />
         </div>
 
@@ -277,13 +278,13 @@
           <fieldset class="flex flex-col md:flex-row gap-5">
             <div class="flex flex-col gap-1 w-full md:w-1/2">
               <label for="sender_id" class="text-[10px] text-on-surface"
-                >SENDER_ID</label
+                >{m.contact_form_sender_label()}</label
               >
               <div class="relative flex items-center">
                 <span class="absolute left-3.5 font-mono text-sm pointer-events-none text-primary-fixed-dim select-none">&gt;</span>
                 <input
                   type="text"
-                  placeholder="guest_user_128"
+                  placeholder={m.contact_form_sender_placeholder()}
                   id="sender_id"
                   name="sender_id"
                   oninput={injectEntropy}
@@ -294,7 +295,7 @@
             </div>
             <div class="flex flex-col gap-1 w-full md:w-1/2">
               <label for="return_path" class="text-[10px] text-on-surface"
-                >RETURN_PATH</label
+                >{m.contact_form_email_label()}</label
               >
               <div class="relative flex items-center">
                 <AtSignIcon
@@ -302,7 +303,7 @@
                 />
                 <input
                   type="email"
-                  placeholder="user@remote.host"
+                  placeholder={m.contact_form_email_placeholder()}
                   id="return_path"
                   name="return_path"
                   oninput={injectEntropy}
@@ -314,12 +315,12 @@
           </fieldset>
           <fieldset class="flex flex-col gap-1">
             <label for="message_payload" class="text-[10px] text-on-surface"
-              >MESSAGE_PAYLOAD</label
+              >{m.contact_form_message_label()}</label
             >
             <textarea
               name="message_payload"
               id="message_payload"
-              placeholder="> Enter message parameters..."
+              placeholder={m.contact_form_message_placeholder()}
               oninput={injectEntropy}
               onfocus={injectEntropy}
               class="border bg-surface-container-lowest/70 resize-none focus:border-primary-fixed-dim py-2 px-3 h-32 text-sm rounded-none outline-none focus:outline-none border-outline-variant transition-all font-mono text-primary placeholder-primary/30"
@@ -329,13 +330,13 @@
             <div
               class="uppercase flex flex-col text-[10px] opacity-75 font-mono text-on-surface-variant"
             >
-              <span>attachment_ready: false</span>
-              <span>compression_active: true</span>
-              <span>packet_priority: normal</span>
+              <span>{m.contact_form_attachment_ready()}</span>
+              <span>{m.contact_form_compression_active()}</span>
+              <span>{m.contact_form_packet_priority()}</span>
             </div>
             <button
               class="w-full md:w-auto p-2.5 cursor-pointer border border-outline-variant bg-transparent text-primary-fixed-dim hover:bg-white/10 hover:text-primary active:translate-x-px active:translate-y-px transition-all font-mono uppercase text-xs rounded-none outline-none focus:outline-none"
-              >INITIATE_HANDSHAKE</button
+              >{m.contact_form_submit()}</button
             >
           </fieldset>
         </form>
