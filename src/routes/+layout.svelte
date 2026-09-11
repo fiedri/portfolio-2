@@ -2,8 +2,9 @@
   import "./layout.css";
   import TvGlitchOverlay from "$lib/ui/components/TvGlitchOverlay.svelte";
   import { navigating, page } from "$app/stores";
-  import { CpuIcon, RadioIcon, Clock4Icon, MenuIcon, XIcon } from "@lucide/svelte";
+  import { CpuIcon, RadioIcon, Clock4Icon, MenuIcon, XIcon, Volume2Icon, VolumeXIcon } from "@lucide/svelte";
   import MobileNav from "$lib/ui/components/MobileNav.svelte";
+  import { isMuted, toggleMuted, navAudioService } from "$lib/ui/components/audio.svelte";
   import { getLocale, setLocale, deLocalizeUrl } from "$lib/paraglide/runtime.js";
   import { m } from "$lib/paraglide/messages.js";
   let { children } = $props();
@@ -12,6 +13,12 @@
   import { fade } from "svelte/transition";
   const currentLocale = $derived(getLocale());
   const toggleLocale = () => setLocale(currentLocale === "en" ? "es" : "en");
+  const muted = $derived(isMuted());
+  const onToggleMute = () => {
+    const wasMuted = isMuted();
+    toggleMuted();
+    if (wasMuted) navAudioService.play(); // confirmation blip = switch, NOT tv-static
+  };
   const routes = [
     { href: "/projects", label: "/root/projects" },
     { href: "/skills", label: "/root/skills" },
@@ -56,6 +63,18 @@ animate-pulse da un efecto de breathing
         <span class="text-xs">SYSTEM_STATUS: OK</span>
       </div>
     </div>
+      <button
+      class="ml-auto border border-outline-variant hover:bg-primary/30 px-2 text-xs font-mono tracking-widest flex items-center gap-1.5 cursor-pointer"
+      aria-label={muted ? "Activar sonido" : "Silenciar sonido"}
+      title={muted ? "Activar sonido" : "Silenciar sonido"}
+      onclick={onToggleMute}
+    >
+      {#if muted}
+        <VolumeXIcon class="w-3.5 h-3.5" />
+      {:else}
+        <Volume2Icon class="w-3.5 h-3.5" />
+      {/if}
+    </button>
     <div class="flex flex-row gap-3.5 px-2 hidden sm:flex">
       <button
         class="border border-outline-variant hover:bg-primary/30 px-2 text-xs font-mono tracking-widest flex items-center gap-1.5 cursor-pointer"
@@ -76,6 +95,7 @@ animate-pulse da un efecto de breathing
         <Clock4Icon />
       </button>
     </div>
+  
     <button
       class="md:hidden hover:bg-primary/30 p-1.5"
       aria-label="Toggle navigation menu"
@@ -109,7 +129,7 @@ animate-pulse da un efecto de breathing
               /root/dashboard</a
             >
           </li>
-          {#each routes as route}
+          {#each routes as route, i}
             <li
               class="hover:bg-primary/30 {ActiveRoute.startsWith(route.href)
                 ? 'bg-primary/30'
@@ -134,7 +154,7 @@ animate-pulse da un efecto de breathing
         <!-- AQUI VA EL OVERLAY -->
         <div
           class="absolute inset-0 pointer-events-none z-50"
-          out:fade={{ duration: 200 }}
+          out:fade={{ duration: 500 }}
         >
           <TvGlitchOverlay />
         </div>

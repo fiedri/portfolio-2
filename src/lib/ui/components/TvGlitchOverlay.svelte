@@ -1,16 +1,10 @@
 <script>
+  import { audioService } from "$lib/ui/components/audio.svelte";
+
   let canvas;
 
   $effect(() => {
-    const audio = new Audio("/sounds/tv-static.mp3");
-    audio.volume = 0.2;
-
-    audio.play().catch((err) => {
-      console.warn(
-        "La reproducción de audio fue bloqueada por el navegador:",
-        err,
-      );
-    });
+    audioService.play();
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");

@@ -1,4 +1,7 @@
 <script lang="ts">
+
+  import { navAudioService } from "$lib/ui/components/audio.svelte";
+
   interface Props {
     routes: { href: string; label: string }[];
     activePath: string;
@@ -24,6 +27,7 @@
         `transform: rotateX(${(1 - t) * -90}deg); opacity: ${t};`,
     };
   }
+
 </script>
 
 <div class="absolute inset-0 md:hidden [perspective:600px] pointer-events-none z-50">
@@ -36,6 +40,7 @@
 
     <nav
       transition:flipDown
+      onintrostart={() => navAudioService.play()}
       class="absolute top-9 inset-x-0 z-50 bg-background border-b-2 border-outline-variant origin-top will-change-transform pointer-events-auto"
       aria-label="Main navigation"
     >
@@ -54,7 +59,9 @@
               <a
                 href="/"
                 class="h-full w-full block py-1"
-                onclick={() => onClose()}
+                onclick={() => {
+                  onClose();
+                }}
               >
                 {#if activePath == "/"}
                   <span class="animate-pulse">> </span>
@@ -62,7 +69,7 @@
                 /root/dashboard
               </a>
             </li>
-            {#each routes as route}
+            {#each routes as route, i}
               <li
                 class="hover:bg-primary/30 {activePath.startsWith(route.href)
                   ? 'bg-primary/30'
@@ -71,7 +78,9 @@
                 <a
                   href={route.href}
                   class="h-full w-full block py-1"
-                  onclick={() => onClose()}
+                  onclick={() => {
+                    onClose();
+                  }}
                 >
                   {#if activePath.startsWith(route.href)}
                     <span class="animate-pulse">> </span>
