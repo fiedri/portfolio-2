@@ -60,5 +60,7 @@
 	"contact_form_submit": "INICIAR_HANDSHAKE",
 	"contact_form_attachment_ready": "attachment_ready: false",
 	"contact_form_compression_active": "compression_active: true",
-	"contact_form_packet_priority": "packet_priority: normal"
+	"contact_form_packet_priority": "packet_priority: normal",
+	"seo_title": "Friedrich Ruiz — Desarrollador web",
+	"seo_description": "Portafolio de Friedrich Ruiz, desarrollador full-stack especializado en SvelteKit, TypeScript y arquitectura limpia. Proyectos, certificaciones y canales de contacto."
 }

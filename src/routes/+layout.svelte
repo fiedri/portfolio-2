@@ -6,6 +6,7 @@
   import { CpuIcon, RadioIcon, Clock4Icon, MenuIcon, XIcon } from "@lucide/svelte";
   import MobileNav from "$lib/ui/components/MobileNav.svelte";
   import { getLocale, setLocale, deLocalizeUrl } from "$lib/paraglide/runtime.js";
+  import { m } from "$lib/paraglide/messages.js";
   let { children } = $props();
   let mobileNavOpen = $state(false);
   let ActiveRoute = $derived(deLocalizeUrl($page.url).pathname);
@@ -22,7 +23,23 @@
   const isChangingRoute = $derived(!!$navigating);
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<svelte:head>
+  <link rel="icon" type="image/webp" href="/foto.webp" />
+  <link rel="icon" href={favicon} />
+  <title>{m.seo_title()}</title>
+  <meta name="description" content={m.seo_description()} />
+  <meta name="theme-color" content="#0c160a" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://friedrichruiz.netlify.app/" />
+  <meta property="og:title" content={m.seo_title()} />
+  <meta property="og:description" content={m.seo_description()} />
+  <meta property="og:image" content="https://friedrichruiz.netlify.app/snapshot.png" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://friedrichruiz.netlify.app/" />
+  <meta property="twitter:title" content={m.seo_title()} />
+  <meta property="twitter:description" content={m.seo_description()} />
+  <meta property="twitter:image" content="https://friedrichruiz.netlify.app/snapshot.png" />
+</svelte:head>
 <div class="h-screen w-screen flex flex-col overflow-hidden relative">
   <header
     class="border-b-2 border-outline-variant h-9 flex flex-row justify-between items-center"
