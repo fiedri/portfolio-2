@@ -1,0 +1,637 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SYS_HUD_v4.0.1 // OPERATOR_DASHBOARD</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+      .cursor-blink {
+        animation: blink 1s step-end infinite;
+      }
+      .scanline-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+          linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+          linear-gradient(
+            90deg,
+            rgba(255, 0, 0, 0.02),
+            rgba(0, 255, 0, 0.01),
+            rgba(0, 0, 255, 0.02)
+          );
+        background-size:
+          100% 4px,
+          3px 100%;
+        pointer-events: none;
+        z-index: 100;
+      }
+      .grid-bg {
+        background-image:
+          linear-gradient(to right, #333 1px, transparent 1px),
+          linear-gradient(to bottom, #333 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0c160a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #3b4b37;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #00ff41;
+      }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-fixed-variant": "#00530e",
+              "secondary-fixed-dim": "#ffba20",
+              "primary-container": "#00ff41",
+              primary: "#ebffe2",
+              error: "#ffb4ab",
+              "on-tertiary-fixed": "#2c1701",
+              "primary-fixed": "#72ff70",
+              "on-primary-container": "#007117",
+              "tertiary-container": "#ffd5ae",
+              "outline-variant": "#3b4b37",
+              background: "#0c160a",
+              "on-surface-variant": "#b9ccb2",
+              "surface-variant": "#2d382a",
+              "on-background": "#dae6d2",
+              "primary-fixed-dim": "#00e639",
+              "on-secondary-fixed": "#271900",
+              "surface-container-lowest": "#071106",
+              "surface-bright": "#313c2e",
+              secondary: "#ffdb9d",
+              "on-tertiary-fixed-variant": "#5d4124",
+              "on-primary-fixed": "#002203",
+              "tertiary-fixed-dim": "#e7bf99",
+              "on-tertiary-container": "#7a5b3c",
+              "on-surface": "#dae6d2",
+              "error-container": "#93000a",
+              "secondary-fixed": "#ffdea8",
+              "tertiary-fixed": "#ffdcbd",
+              "secondary-container": "#feb700",
+              "on-primary": "#003907",
+              "surface-dim": "#0c160a",
+              "inverse-on-surface": "#283326",
+              "inverse-primary": "#006e16",
+              "on-secondary-fixed-variant": "#5e4200",
+              surface: "#0c160a",
+              "surface-container-highest": "#2d382a",
+              "surface-container-high": "#222d20",
+              "on-secondary": "#412d00",
+              "inverse-surface": "#dae6d2",
+              "on-error-container": "#ffdad6",
+              "surface-tint": "#00e639",
+              outline: "#84967e",
+              "surface-container-low": "#141e12",
+              "surface-container": "#182216",
+              tertiary: "#fff8f4",
+              "on-tertiary": "#442b10",
+              "on-error": "#690005",
+              "on-secondary-container": "#6b4b00",
+            },
+            fontFamily: {
+              "body-md": ["JetBrains Mono"],
+              "headline-md": ["JetBrains Mono"],
+              "code-sm": ["JetBrains Mono"],
+              "body-lg": ["JetBrains Mono"],
+              "label-caps": ["JetBrains Mono"],
+              "headline-lg": ["JetBrains Mono"],
+              display: ["JetBrains Mono"],
+            },
+            fontSize: {
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "headline-md": [
+                "18px",
+                { lineHeight: "24px", fontWeight: "600" },
+              ],
+              "code-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-caps": [
+                "11px",
+                {
+                  lineHeight: "12px",
+                  letterSpacing: "0.1em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-lg": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              display: [
+                "48px",
+                {
+                  lineHeight: "1.1",
+                  letterSpacing: "-0.05em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-background text-on-background font-body-md overflow-hidden">
+    <div class="scanline-overlay"></div>
+    <!-- TopAppBar -->
+    <header
+      class="flex justify-between items-center h-12 px-gutter w-full fixed top-0 z-50 bg-background border-b border-outline-variant"
+    >
+      <div class="flex items-center gap-4">
+        <span
+          class="font-headline-md text-headline-md text-primary tracking-tighter"
+          >SYS_HUD_v4.0.1</span
+        >
+        <div
+          class="hidden md:flex items-center gap-2 px-3 py-0.5 border border-primary-container/30 text-primary-container text-code-sm"
+        >
+          <span
+            class="w-2 h-2 bg-primary-container inline-block animate-pulse"
+          ></span>
+          SYSTEM_STATUS: OK
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <button
+          class="material-symbols-outlined text-primary hover:bg-surface-variant transition-colors p-1"
+          data-icon="memory"
+        >
+          memory
+        </button>
+        <button
+          class="material-symbols-outlined text-primary hover:bg-surface-variant transition-colors p-1"
+          data-icon="wifi_tethering"
+        >
+          wifi_tethering
+        </button>
+        <button
+          class="material-symbols-outlined text-primary hover:bg-surface-variant transition-colors p-1"
+          data-icon="schedule"
+        >
+          schedule
+        </button>
+      </div>
+    </header>
+    <!-- SideNavBar -->
+    <aside
+      class="fixed left-0 top-12 h-[calc(100vh-48px)] w-64 border-r border-outline-variant bg-background flex flex-col p-4 gap-2 z-40 hidden md:flex"
+    >
+      <div class="mb-4">
+        <div class="font-label-caps text-label-caps text-primary">
+          OPERATOR_ID: DEV_01
+        </div>
+        <div class="font-code-sm text-code-sm text-on-surface-variant">
+          AUTHENTICATED_SESSION
+        </div>
+      </div>
+      <nav class="flex flex-col gap-1">
+        <a
+          class="font-code-sm text-code-sm flex items-center p-2 text-primary font-bold before:content-['&gt;'] before:mr-2 bg-surface-container-highest transition-all duration-75"
+          href="#"
+          >/root/projects</a
+        >
+        <a
+          class="font-code-sm text-code-sm flex items-center p-2 text-on-surface-variant hover:text-primary hover:bg-surface-variant hover:border-l-4 hover:border-primary transition-all duration-75"
+          href="#"
+          >/root/skills</a
+        >
+        <a
+          class="font-code-sm text-code-sm flex items-center p-2 text-on-surface-variant hover:text-primary hover:bg-surface-variant hover:border-l-4 hover:border-primary transition-all duration-75"
+          href="#"
+          >/root/logs</a
+        >
+        <a
+          class="font-code-sm text-code-sm flex items-center p-2 text-on-surface-variant hover:text-primary hover:bg-surface-variant hover:border-l-4 hover:border-primary transition-all duration-75"
+          href="#"
+          >/root/contact</a
+        >
+      </nav>
+      <div class="mt-auto border-t border-outline-variant pt-4">
+        <div class="text-code-sm text-on-surface-variant mb-2">
+          NETWORK_LOAD
+        </div>
+        <div class="flex gap-1 h-2">
+          <div class="flex-1 bg-primary-container"></div>
+          <div class="flex-1 bg-primary-container"></div>
+          <div class="flex-1 bg-primary-container"></div>
+          <div class="flex-1 bg-surface-variant"></div>
+          <div class="flex-1 bg-surface-variant"></div>
+        </div>
+      </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main
+      class="md:ml-64 mt-12 mb-8 h-[calc(100vh-80px)] overflow-y-auto p-gutter grid-bg"
+    >
+      <div class="max-w-7xl mx-auto space-y-gutter">
+        <!-- Welcome Hero -->
+        <section
+          class="border border-outline-variant bg-background p-6 relative overflow-hidden"
+        >
+          <div
+            class="absolute top-0 right-0 p-2 font-label-caps text-label-caps text-outline opacity-50"
+          >
+            SEC_LEVEL_01
+          </div>
+          <div class="relative z-10">
+            <h1
+              class="font-display text-display text-primary leading-none mb-2"
+            >
+              WELCOME, OPERATOR
+            </h1>
+            <p
+              class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl"
+            >
+              Neural interface link established. Core systems are operating
+              within nominal parameters. Awaiting command sequence for Project
+              Alpha.
+              <span
+                class="inline-block w-2 h-4 bg-primary-container ml-1 cursor-blink align-middle"
+              ></span>
+            </p>
+          </div>
+          <!-- Micro-interaction Background Component -->
+          <div
+            class="absolute -bottom-10 -right-10 w-64 h-64 opacity-10 pointer-events-none"
+          >
+            <div
+              class="w-full h-full border-8 border-primary-container rounded-full animate-pulse"
+            ></div>
+          </div>
+        </section>
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+          <!-- System Diagnostics (Left) -->
+          <div class="lg:col-span-8 space-y-gutter">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+              <!-- Stat Card 1 -->
+              <div
+                class="border border-outline-variant bg-surface-container-low p-4 hover:border-primary-container transition-colors group"
+              >
+                <div class="flex justify-between items-start mb-4">
+                  <span
+                    class="font-label-caps text-label-caps text-on-surface-variant"
+                    >CPU_UTILIZATION</span
+                  >
+                  <span
+                    class="material-symbols-outlined text-primary-container"
+                    data-icon="speed"
+                    >speed</span
+                  >
+                </div>
+                <div class="text-headline-lg font-headline-lg text-primary">
+                  84.2%
+                </div>
+                <div class="mt-4 flex gap-1 h-1.5">
+                  <div class="bg-primary-container w-[84.2%]"></div>
+                  <div class="bg-surface-variant flex-1"></div>
+                </div>
+              </div>
+              <!-- Stat Card 2 -->
+              <div
+                class="border border-outline-variant bg-surface-container-low p-4 hover:border-primary-container transition-colors group"
+              >
+                <div class="flex justify-between items-start mb-4">
+                  <span
+                    class="font-label-caps text-label-caps text-on-surface-variant"
+                    >MEM_STABILITY</span
+                  >
+                  <span
+                    class="material-symbols-outlined text-secondary-fixed-dim"
+                    data-icon="database"
+                    >database</span
+                  >
+                </div>
+                <div class="text-headline-lg font-headline-lg text-secondary">
+                  STABLE
+                </div>
+                <div class="mt-4 flex gap-1 h-1.5">
+                  <div class="bg-secondary-container w-[98%]"></div>
+                  <div class="bg-surface-variant flex-1"></div>
+                </div>
+              </div>
+            </div>
+            <!-- Project Summary Bento -->
+            <div
+              class="border border-outline-variant bg-background overflow-hidden"
+            >
+              <div
+                class="bg-surface-variant p-2 px-4 font-label-caps text-label-caps flex justify-between"
+              >
+                <span>LATEST_DEPLOYMENTS</span>
+                <span class="text-primary-container">VIEW_ALL_LOGS</span>
+              </div>
+              <div class="divide-y divide-outline-variant">
+                <!-- Project Item -->
+                <div
+                  class="p-4 flex flex-col md:flex-row md:items-center justify-between hover:bg-surface-container transition-colors"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-12 h-12 bg-surface-container-highest border border-outline-variant flex items-center justify-center"
+                    >
+                      <span
+                        class="material-symbols-outlined text-on-surface-variant"
+                        data-icon="terminal"
+                        >terminal</span
+                      >
+                    </div>
+                    <div>
+                      <div class="text-body-lg font-headline-md text-primary">
+                        PROJECT_XERO
+                      </div>
+                      <div class="text-code-sm text-on-surface-variant">
+                        BUILD_HASH: 0x9f4a2...
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-4 md:mt-0 flex items-center gap-4">
+                    <div class="text-right hidden md:block">
+                      <div
+                        class="text-code-sm font-label-caps text-primary-container"
+                      >
+                        SUCCESS
+                      </div>
+                      <div class="text-code-sm text-on-surface-variant">
+                        2m ago
+                      </div>
+                    </div>
+                    <button
+                      class="border border-outline-variant px-4 py-1 font-label-caps text-label-caps hover:bg-primary-container hover:text-background transition-all active:translate-x-0.5 active:translate-y-0.5"
+                    >
+                      OPEN
+                    </button>
+                  </div>
+                </div>
+                <!-- Project Item -->
+                <div
+                  class="p-4 flex flex-col md:flex-row md:items-center justify-between hover:bg-surface-container transition-colors"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-12 h-12 bg-surface-container-highest border border-outline-variant flex items-center justify-center"
+                    >
+                      <span
+                        class="material-symbols-outlined text-on-surface-variant"
+                        data-icon="cloud"
+                        >cloud</span
+                      >
+                    </div>
+                    <div>
+                      <div class="text-body-lg font-headline-md text-primary">
+                        NEURAL_MESH_v2
+                      </div>
+                      <div class="text-code-sm text-on-surface-variant">
+                        BUILD_HASH: 0x11b3e...
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-4 md:mt-0 flex items-center gap-4">
+                    <div class="text-right hidden md:block">
+                      <div
+                        class="text-code-sm font-label-caps text-secondary-fixed-dim"
+                      >
+                        DEPLOYING
+                      </div>
+                      <div class="text-code-sm text-on-surface-variant">
+                        45s ago
+                      </div>
+                    </div>
+                    <button
+                      class="border border-outline-variant px-4 py-1 font-label-caps text-label-caps hover:bg-primary-container hover:text-background transition-all active:translate-x-0.5 active:translate-y-0.5"
+                    >
+                      HALT
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- System Logs (Right) -->
+          <div
+            class="lg:col-span-4 border border-outline-variant bg-surface-container-lowest flex flex-col max-h-[600px]"
+          >
+            <div
+              class="bg-surface-variant p-2 px-4 font-label-caps text-label-caps border-b border-outline-variant"
+            >
+              DIAGNOSTIC_LOG_STREAM
+            </div>
+            <div
+              class="p-4 flex-1 overflow-y-auto space-y-3 font-code-sm text-code-sm"
+            >
+              <div class="flex gap-2">
+                <span class="text-on-surface-variant shrink-0">[14:02:11]</span>
+                <span class="text-primary-container">INFO:</span>
+                <span class="text-on-background"
+                  >Inbound handshake sequence verified.</span
+                >
+              </div>
+              <div class="flex gap-2">
+                <span class="text-on-surface-variant shrink-0">[14:02:15]</span>
+                <span class="text-primary-container">INFO:</span>
+                <span class="text-on-background"
+                  >Synchronizing local clocks with global atomic standard.</span
+                >
+              </div>
+              <div class="flex gap-2">
+                <span class="text-on-surface-variant shrink-0">[14:03:01]</span>
+                <span class="text-secondary-fixed-dim">WARN:</span>
+                <span class="text-on-background"
+                  >Subsystem 04 reporting high latency on bus line.</span
+                >
+              </div>
+              <div class="flex gap-2">
+                <span class="text-on-surface-variant shrink-0">[14:05:42]</span>
+                <span class="text-primary-container">INFO:</span>
+                <span class="text-on-background"
+                  >System integrity check completed. 0 issues found.</span
+                >
+              </div>
+              <div class="flex gap-2">
+                <span class="text-on-surface-variant shrink-0">[14:06:22]</span>
+                <span class="text-error">FAIL:</span>
+                <span class="text-on-background"
+                  >Connection refused by external node 192.168.1.4.</span
+                >
+              </div>
+              <div class="flex gap-2">
+                <span class="text-on-surface-variant shrink-0">[14:08:10]</span>
+                <span class="text-primary-container">INFO:</span>
+                <span class="text-on-background"
+                  >Re-attempting connection... SUCCESS.</span
+                >
+              </div>
+              <div class="flex gap-2">
+                <span class="text-on-surface-variant shrink-0">[14:10:05]</span>
+                <span class="text-primary-container">INFO:</span>
+                <span class="text-on-background">Kernel buffer cleared.</span>
+              </div>
+              <div class="pt-2">
+                <span class="text-primary-container cursor-blink">_</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Visualization Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          <div
+            class="h-64 border border-outline-variant bg-black flex items-center justify-center relative group overflow-hidden"
+          >
+            <div
+              class="absolute inset-0 bg-cover bg-center opacity-30 group-hover:scale-110 transition-transform duration-1000"
+              data-alt="A macro-photography styled digital render of a server rack with pulsating green neon lights. The environment is dark and industrial, with sharp shadows and technical 1px grid lines visible on the surfaces. The aesthetic is clean and functional, emphasizing precision hardware and advanced computing power in a dark minimalist setting."
+              style="
+                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCsuXE3CID13HnkeHgxN6K9CQ8LfxqY5lkikKbEMcXZiRinZLc4l_X6MJmPbcqtut1tYPDlp1BB2YpMVy87-rIl7-E1Dc_hbUWRTiBKIzH2QNxYHtdW6rW40pzNGICNW7yZw0MwXq5B1FeJdbQatwyOilO2xb2T7-oZm9v6qWzyVafD0L20VHneZG2ocAPrYwyFT8cqXggfgGeS0Bpo3MfMXFSW7nEXm3v3rfQNSpIrAXn3ebCc1Aq1dUwsbjq-Mq2zk1bVlerUKVAa&quot;);
+              "
+            ></div>
+            <div
+              class="relative z-10 font-label-caps text-label-caps text-primary border border-primary p-2 backdrop-blur-sm"
+            >
+              DATACENTER_CAM_01
+            </div>
+          </div>
+          <div
+            class="h-64 border border-outline-variant bg-black flex items-center justify-center relative group overflow-hidden"
+          >
+            <div
+              class="absolute inset-0 bg-cover bg-center opacity-30 group-hover:scale-110 transition-transform duration-1000"
+              data-alt="A top-down architectural blueprint of a circular high-tech facility, rendered in glowing green vector lines against a solid black background. The design is purely functional and industrial, showing pathways, ventilation shafts, and power distribution nodes. The visual style is that of a military-grade tactical interface or a technical engineering schematic."
+              style="
+                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDJLglJniCU9Gdt9I5USAhlddRcYiuJASnNfcsNoo_Hikx7FhLSCJrCVyY46OHeH1Tt5D_qmV_9kMuit1vCCq_c0pQdEbdoegZBybVoUk4vQTqEvRUq1R9Y90DK_0Huj7iI7c5dBlH0nyrCUk5NyhkZQm3i2FUVQHXGc3wbeyRhRELEJxEneWzwVcTZCh1B8vH7XhL3yptexV9RM5jTnot6fupztj3wIG_SSzB_kjJGUxwL8X942GzvkUaAY6vUuCmGUZp1Sr2x57ZG&quot;);
+              "
+            ></div>
+            <div
+              class="relative z-10 font-label-caps text-label-caps text-primary border border-primary p-2 backdrop-blur-sm"
+            >
+              FACILITY_LAYOUT
+            </div>
+          </div>
+          <div
+            class="h-64 border border-outline-variant bg-black flex items-center justify-center relative group overflow-hidden"
+          >
+            <div
+              class="absolute inset-0 bg-cover bg-center opacity-30 group-hover:scale-110 transition-transform duration-1000"
+              data-alt="A close-up shot of a mechanical hand with exposed internal wiring and chrome joints, resting on a dark carbon-fiber surface. The lighting is cold and clinical, highlighting the intricate engineering of the prosthetic. The aesthetic is hard-edge minimalism, combining organic forms with industrial precision and advanced cybernetic technology."
+              style="
+                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAB7_orHhoVq2fxBX-ufOKzbQRxBHiVLlb1d1YKO2ZVceTR5MXyPEUIJVKvIHwFo7jg5kDsS4g388Z9n23sA5YJtlO8J4kRAkvOAkv0Lq_kdBLdHO0S9uXc4sDy9uQ_FMWwn286F0-BHL1WkYo5E9kGbVAaHelpGl-_MOBtVICFrO19FaAeGXa94ILLrj7jlLYULKKnGSbjtTqO2X_XBFscpRa6yI6993-yBBhImLVXt44FY774eVKpZcM1OPly2bJSZGQBQHdkCNsj&quot;);
+              "
+            ></div>
+            <div
+              class="relative z-10 font-label-caps text-label-caps text-primary border border-primary p-2 backdrop-blur-sm"
+            >
+              ROBOTIC_TELEMETRY
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer
+      class="fixed bottom-0 left-0 w-full h-8 flex justify-between items-center px-gutter bg-background z-50 border-t border-outline-variant overflow-hidden"
+    >
+      <div class="font-code-sm text-code-sm text-secondary">
+        STN_ID: PROT_443 // KERNEL: 6.2.0
+      </div>
+      <div class="flex gap-4">
+        <span class="font-code-sm text-code-sm text-on-surface-variant"
+          >LOG_LEVEL: VERBOSE</span
+        >
+        <span class="font-code-sm text-code-sm text-on-surface-variant"
+          >ENCODING: UTF-8</span
+        >
+        <span class="font-code-sm text-code-sm text-primary animate-pulse"
+          >● UPTIME: 334:12:09</span
+        >
+      </div>
+    </footer>
+    <script>
+      // Simple interactive pulse effect for "Active" borders
+      document.querySelectorAll(".border").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          if (!el.classList.contains("border-primary")) {
+            el.style.borderColor = "#00ff41";
+          }
+        });
+        el.addEventListener("mouseleave", () => {
+          if (!el.classList.contains("border-primary")) {
+            el.style.borderColor = "";
+          }
+        });
+      });
+
+      // Fake log stream generator
+      const logEntries = [
+        "Syncing telemetry with satellite cluster...",
+        "Cleaning cache partition /dev/nvme0n1p3",
+        "Incoming packet from node 88.21.0.4 - ACCEPTED",
+        "Thermal levels at 44C. Fan speed NORMAL.",
+        "Database maintenance task complete.",
+      ];
+      const logContainer = document.querySelector(
+        ".lg\\:col-span-4 .overflow-y-auto",
+      );
+
+      setInterval(() => {
+        const lastChild = logContainer.lastElementChild;
+        const entry = document.createElement("div");
+        entry.className =
+          "flex gap-2 animate-in fade-in slide-in-from-left-2 duration-300";
+        const now = new Date();
+        const timeStr = `[${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}]`;
+        entry.innerHTML = `
+                <span class="text-on-surface-variant shrink-0">${timeStr}</span>
+                <span class="text-primary-container">INFO:</span>
+                <span class="text-on-background">${logEntries[Math.floor(Math.random() * logEntries.length)]}</span>
+            `;
+        logContainer.insertBefore(entry, lastChild);
+        logContainer.scrollTop = logContainer.scrollHeight;
+        if (logContainer.children.length > 25)
+          logContainer.removeChild(logContainer.children[0]);
+      }, 5000);
+    </script>
+  </body>
+</html>
+

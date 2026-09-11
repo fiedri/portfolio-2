@@ -1,0 +1,39 @@
+<script>
+let specs = [
+{ title: "Name", value: "Friedrich Ruiz"},
+{ title: "role", value: "junior_full_stack_dev"},
+{ title: "location", value: "coro_vz"},
+{ title: "Core_stack", value: "sveltekit // tailwind // drizzle"},
+{ title: "status", value: "Active_Code_evolution"}]
+</script>
+<div class="flex flex-col h-full">
+<div>
+<h1>NEURAL_LINK_ESTABLISHED // ACCESS_GRANTED</h1>
+<p >
+<span class="animate-pulse text-primary-fixed-dim">TO OPERATOR_ID: FRIEDRICH. Awaiting system command secuences for structural diagnostics.</span><span class="w-2 h-4 bg-primary-fixed-dim animate-blink flex-shrink-0 inline-block"></span>
+</p>
+</div>
+
+<div class="grid grid-cols-2 grid-rows-1 gap-0 border-t-3 border-outline-variant flex-grow">
+<section class="border-r border-outline-variant flex flex-col">
+    
+    <span class="bg-outline-variant text-background font-normal px-2 text-xs font-bold inline-block self-start">
+      // OPERATOR_SPECS
+    </span>
+<div>
+{#each specs as spec}
+ <div class="uppercase flex flex-col border-l">
+<span>{spec.title}:</span>
+<span>{spec.value}</span>
+ </div> 
+{/each}
+</div>
+</section>
+
+<section class="border-l border-outline-variant"></section>
+
+
+</div>
+
+</div>
+
