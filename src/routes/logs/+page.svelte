@@ -15,7 +15,7 @@
       date: 2026,
       issuer: "freeCodeCamp",
       issuerLogo: "/certificates/logo.webp",
-      verifyLink: "https://www.freecodecamp.org/certification/friedrichruiz/relational-database-v8",
+      verifyLink: "https://www.freecodecamp.org/certification/friedrichruiz/relational-database-v9",
     },
     {
       title: "Solana LATAM Builders Bootcamp",
